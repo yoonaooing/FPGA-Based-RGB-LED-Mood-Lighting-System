@@ -107,5 +107,4 @@ The system uses **PWM (Pulse Width Modulation)** to control LED brightness in di
 ---
 
 ## 👩‍💻 Contributors
-- **Jiyoon Kim** – Block Design & Testbench  
-- **Yuna Oh** – Block Design & Testbench  
+- **Yoona Oh, Jiyoon Kim** – Block Design & Testbench  
