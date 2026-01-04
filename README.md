@@ -22,8 +22,7 @@ The system uses **PWM (Pulse Width Modulation)** to control LED brightness in di
 ---
 
 ## 🛠️ System Architecture
-![Top Module Block Diagram](<img width="1136" height="638" alt="image" src="https://github.com/user-attachments/assets/61b6375d-f154-460b-83a1-c81bd7b2aba2" />
-) 
+<img width="800" height="500" alt="image" src="https://github.com/user-attachments/assets/a27fc964-0494-448d-9c27-84fb505b9b99" />
 
 ### Brightness Control Method
 - **PWM (Pulse Width Modulation)** is used to control LED brightness
