@@ -1,112 +1,112 @@
 # FPGA-Based-RGB-LED-Mood-Lighting-System
 (Digital Systems Design and Lab Project)
 
-📌 Project Overview
+## 📌 Project Overview
+This project implements an **FPGA-based RGB LED mood lighting system** that allows users to create various lighting effects by independently controlling the brightness of Red, Green, and Blue LEDs.
 
-This project implements an FPGA-based RGB LED mood lighting system that allows users to create various lighting effects by independently controlling the brightness of Red, Green, and Blue LEDs.
+The system uses **PWM (Pulse Width Modulation)** to control LED brightness in discrete levels, enabling smooth and intuitive color mixing. Users can select colors and adjust brightness through hardware buttons and switches, while the current state is displayed via a 7-segment display.
 
-The system uses PWM (Pulse Width Modulation) to control LED brightness in discrete levels, enabling smooth and intuitive color mixing. Users can select colors and adjust brightness through hardware buttons and switches, while the current state is displayed via a 7-segment display.
+---
 
-<img width="1137" height="636" alt="image" src="https://github.com/user-attachments/assets/28e2e963-0d20-4393-9662-5ed3b9cd16c4" />
+## 🎯 Key Features
+- Independent brightness control for **R / G / B LEDs**
+- **5-level brightness control** (Level 0 ~ 4)
+- Supports:
+  - Single color mode (1 Color)
+  - Dual color mixing (2 Color)
+  - Full RGB mixing (3 Color)
+- Brightness adjustment using push buttons
+- Real-time visual feedback using **7-segment display**
+- Fully synchronous FPGA-based digital design
 
+---
 
-🎯 Key Features
+## 🛠️ System Architecture
+![Top Module Block Diagram](<img width="1136" height="638" alt="image" src="https://github.com/user-attachments/assets/61b6375d-f154-460b-83a1-c81bd7b2aba2" />
+) 
 
-Independent brightness control for R / G / B LEDs
+### Brightness Control Method
+- **PWM (Pulse Width Modulation)** is used to control LED brightness
+- Brightness is determined by the **duty cycle**
+  - Higher duty cycle → brighter LED
+  - Lower duty cycle → dimmer LED
+- Brightness levels are generated using a **ROM-based duty cycle lookup table**
 
-5-level brightness control (Level 0 ~ 4)
+---
 
-Support for:
+## 🎛️ User Inputs
+- **RGB Selection Switch (`sw_rgb[2:0]`)**
+  - `sw_rgb[0]` → Red
+  - `sw_rgb[1]` → Green
+  - `sw_rgb[2]` → Blue
+- **Push Buttons**
+  - `btn_up`   : Increase brightness
+  - `btn_down` : Decrease brightness
+- **Reset**
+  - Initializes all RGB brightness levels to 0
 
-Single color mode (1 Color)
+---
 
-Dual color mixing (2 Color)
+## 💡 Outputs
+- RGB LED (PWM-controlled)
+- 7-Segment Display  
+  - Displays selected color and brightness level (0–4)
 
-Full RGB mixing (3 Color)
+---
 
-Real-time brightness adjustment using push buttons
+## 🧩 Module Description
 
-Visual feedback using 7-segment display
+### Data Path Modules
+- **PWM_counter**  
+  Generates PWM signals by comparing the counter value with the duty cycle value.
 
-Fully synchronous digital design on FPGA
+- **counter_20ms**  
+  Provides a stable time base for PWM period control.
 
-🛠️ System Architecture
-1. Brightness Control Method
+- **ROM_n**  
+  Converts brightness level (0–4) into predefined duty cycle values.
 
-PWM (Pulse Width Modulation) is used to adjust LED brightness
+- **Main_led_brightness_control_PWM**  
+  Integrates PWM logic to drive RGB LEDs based on selected brightness levels.
 
-Brightness is determined by the duty cycle
+- **Seg7_ascii**  
+  Converts brightness and color information into 7-segment display signals.
 
-Higher duty cycle → brighter LED
+---
 
-Lower duty cycle → dimmer LED
+### Control Path Modules
+- **Top_button**  
+  Handles user button inputs for brightness adjustment.
 
-Brightness levels are mapped using a ROM-based duty cycle table
+- **Selection_counter**  
+  Tracks the currently selected RGB color channel.
 
-2. User Inputs
+- **Top_pwm_control**  
+  Controls brightness updates and PWM duty cycle assignment.
 
-RGB Selection Switch (sw_rgb[2:0])
+- **top_debounce / sm_debounce**  
+  Removes mechanical noise from push button inputs.
 
-sw_rgb[0] → Red
+- **Synchronizer**  
+  Synchronizes asynchronous inputs to the system clock.
 
-sw_rgb[1] → Green
+- **lev_puls_conv**  
+  Converts level signals into single-cycle pulse signals for reliable control.
 
-sw_rgb[2] → Blue
+---
 
-Push Buttons
+## 🔁 Finite State Machine (FSM)
 
-btn_up : Increase brightness
+| State | Description |
+|------|------------|
+| INIT | Initialize RGB brightness to 0 |
+| COLOR_SELECT | Select R / G / B channel |
+| BRIGHT_UP | Increase selected color brightness |
+| BRIGHT_DOWN | Decrease selected color brightness |
+| UPDATE_PWM | Update PWM duty cycle using ROM |
 
-btn_down : Decrease brightness
+---
 
-Reset
-
-Initializes all RGB brightness levels to 0
-
-3. Output Components
-
-RGB LED (PWM controlled)
-
-7-Segment Display
-
-Displays selected color and brightness level (0–4)
-
-🧩 Module Description
-Data Path
-
-PWM_counter
-
-counter_20ms
-
-ROM_n
-
-Seg7_ascii
-
-Main_led_brightness_control_PWM
-
-Control Path
-
-Top_button
-
-Selection_counter
-
-Top_pwm_control
-
-top_debounce / sm_debounce
-
-Synchronizer
-
-lev_puls_conv
-
-🔁 Finite State Machine (FSM)
-State	Description
-INIT	Initialize RGB brightness to 0
-COLOR_SELECT	Select R / G / B channel
-BRIGHT_UP	Increase selected color brightness
-BRIGHT_DOWN	Decrease selected color brightness
-UPDATE_PWM	Update PWM duty cycle using ROM
-👩‍💻 Contributors
-
-Jiyoon Kim – Block Design & Testbench
-
-Yuna Oh – Block Design & Testbench
+## 👩‍💻 Contributors
+- **Jiyoon Kim** – Block Design & Testbench  
+- **Yuna Oh** – Block Design & Testbench  
